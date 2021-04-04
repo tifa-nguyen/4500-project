@@ -1,32 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb2d;
     public float speed = 5.0f;
-    public Text clockText;
-    private int timeCount;
-    private float timer = 0.0f;
-    private int seconds;
+    public int maxHealth = 10;
+    private int health;
+
     
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        clockText.text = "Time: " + timeCount.ToString() + " seconds";
+        health = 10;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        timeCount = 0;
-        timer += Time.deltaTime;
-        seconds = (int)timer % 60;
-        timeCount += seconds;
-        clockText.text = "Time: " + timeCount.ToString() + " seconds";
+
     }
 
     // FixedUpdate is in sync with physics engine
@@ -39,5 +34,13 @@ public class PlayerController : MonoBehaviour
         // Convert user input to player movement.
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
         rb2d.velocity = movement * speed;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy") && health > 0 || other.gameObject.CompareTag("Bullet") && health > 0) // If health is greater than 0, lower current health.
+        {
+            health--;
+        }
     }
 }

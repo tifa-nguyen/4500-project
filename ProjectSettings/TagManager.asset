@@ -8,6 +8,10 @@ TagManager:
   - CheckpointWall
   - Obstacles
   - Bullet
+  - Boss
+  - Border
+  - EnemyBullet
+  - Mines
   layers:
   - Default
   - TransparentFX

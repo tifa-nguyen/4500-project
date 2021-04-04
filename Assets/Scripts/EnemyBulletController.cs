@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+public class EnemyBulletController : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -16,10 +16,10 @@ public class BulletController : MonoBehaviour
 
     }
 
-    
+
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Boss") || other.gameObject.CompareTag("Mines") || other.gameObject.CompareTag("Bullet") || other.gameObject.CompareTag("EnemyBullet") || other.gameObject.CompareTag("Border") || other.gameObject.CompareTag("CheckpointWall"))   // On collision with an enemy or wall barrier, do the following:
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Mines") || other.gameObject.CompareTag("Bullet") || other.gameObject.CompareTag("Border") || other.gameObject.CompareTag("CheckpointWall"))   // On collision with an enemy or wall barrier, do the following:
         {
             Destroy(gameObject);    // Destroy the laser
         }
