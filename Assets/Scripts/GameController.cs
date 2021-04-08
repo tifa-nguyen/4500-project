@@ -50,6 +50,9 @@ public class GameController : MonoBehaviour
         {
             winText.text = "You win!" +
                 "\nTime taken: " + timeCount.ToString() + " seconds";
+            menuButton.gameObject.SetActive(true);
+            restartButton.gameObject.SetActive(true);
+            quitButton.gameObject.SetActive(true);
         }
     }
 
