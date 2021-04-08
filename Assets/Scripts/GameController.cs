@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -63,5 +64,20 @@ public class GameController : MonoBehaviour
         seconds = (int)timer % 60;
         timeCount += seconds;
         clockText.text = "Time: " + timeCount.ToString() + " seconds";
+    }
+
+    public void OnMenuButtonPress()
+    {
+        SceneManager.LoadScene("Menu");  // Play the game
+    }
+
+    public void OnRestartButtonPress()
+    {
+        SceneManager.LoadScene("Game");  // Play the game
+    }
+
+    public void OnExitButtonPress()
+    {
+        Application.Quit();  // Exit the game
     }
 }
