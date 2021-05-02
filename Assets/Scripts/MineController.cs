@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MineController : MonoBehaviour
 {
+    public GameObject explodePrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +24,7 @@ public class MineController : MonoBehaviour
         {
             GameController.timer += 5;     // Increase time by 5 seconds.
             Destroy(gameObject);    // Destory the mine
-            //Instantiate(explodePrefab, transform.position, transform.rotation); // Play explosion animation
+            Instantiate(explodePrefab, transform.position, transform.rotation); // Play explosion animation
         }
     }
 }

@@ -1,10 +1,4 @@
-﻿/*
- * Author:          Tiffany Nguyen
- * Date:            December 13, 2020
- * Description:     This script handles the Boss health and missile firing towards the player.
- */
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +7,7 @@ public class BossController : MonoBehaviour
     public GameObject player;
     public Rigidbody2D bullet;
     public GameObject gun;
-    //public GameObject explodePrefab;
+    public GameObject explodePrefab;
     private Rigidbody2D rb2d;
     private static int bossHealth = 20;
     public float speed = 3f;
@@ -53,11 +47,6 @@ public class BossController : MonoBehaviour
         //sounds[0].Play();       // Play laser sound effect.
     }
 
-    public static int getBossHealth()
-    {
-        return bossHealth;
-    }
-
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Bullet"))   // On collision with an bullet, do the following:
@@ -66,7 +55,7 @@ public class BossController : MonoBehaviour
             if (bossHealth == 0)
             {
                 Destroy(gameObject);    // Destory the enemy
-                //Instantiate(explodePrefab, transform.position, transform.rotation); // Play explosion animation
+                Instantiate(explodePrefab, transform.position, transform.rotation); // Play explosion animation
                 GameController.isGameWin = true;
             }
         }

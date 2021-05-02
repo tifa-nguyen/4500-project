@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    //public GameObject explodePrefab;
+    public GameObject explodePrefab;
     private GameObject player;
     private Rigidbody2D rb2d;
     public Rigidbody2D bullet;
@@ -48,17 +48,17 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Bullet"))   // On collision with an bullet, do the following:
+        if (other.gameObject.CompareTag("Bullet"))   // On collision with a bullet, do the following:
         {
             GameController.count++;     // Increments the score count
             Destroy(gameObject);    // Destory the enemy
-            //Instantiate(explodePrefab, transform.position, transform.rotation); // Play explosion animation
+            Instantiate(explodePrefab, transform.position, transform.rotation); // Play explosion animation
         }
-        if (other.gameObject.CompareTag("Player"))   // On collision with an bullet, do the following:
+        if (other.gameObject.CompareTag("Player"))   // On collision with the player, do the following:
         {
             GameController.count++;     // Increments the score count
             Destroy(gameObject);    // Destory the enemy
-            //Instantiate(explodePrefab, transform.position, transform.rotation); // Play explosion animation
+            Instantiate(explodePrefab, transform.position, transform.rotation); // Play explosion animation
         }
     }
 }

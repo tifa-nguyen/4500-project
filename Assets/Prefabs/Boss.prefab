@@ -258,5 +258,7 @@ MonoBehaviour:
   player: {fileID: 0}
   bullet: {fileID: 3113489124780604907, guid: 232bc011e67b886498c095ebc4e75358, type: 3}
   gun: {fileID: 4793597175736107083}
+  explodePrefab: {fileID: 332834141989494399, guid: 04fff09acd6de5144834b5ecb87f0170,
+    type: 3}
   speed: 2
   shotForce: 50

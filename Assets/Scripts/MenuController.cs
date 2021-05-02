@@ -1,10 +1,4 @@
-﻿/*
- * Author:          Tiffany Nguyen
- * Date:            December 13, 2020
- * Description:     This script handles the buttons on the main menu.
- */
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +11,7 @@ public class MenuController : MonoBehaviour
 
     public void OnPlayButtonPress()
     {
-        SceneManager.LoadScene("Game");  // Play the game
+        SceneManager.LoadScene("Lobby");  // Connects to the online lobby
     }
 
     public void OnExitButtonPress()
