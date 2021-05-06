@@ -3,81 +3,85 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
-public class GameController : MonoBehaviour
+namespace Duoshooter
 {
-    public GameObject firstCheckpoint;
-    public GameObject secondCheckpoint;
-    public Text clockText;
-    public Text winText;
-    public Button menuButton;
-    public Button restartButton;
-    public Button quitButton;
-    public static int timeCount;
-    public static float timer = 0.0f;
-    private int seconds;
-    public static int count = 0;
-    public static bool isGameWin = false;
-
-    // Start is called before the first frame update
-    void Start()
+    public class GameController : MonoBehaviour
     {
-        clockText.text = "Time: " + timeCount.ToString() + " seconds";
-        winText.text = "";
-        menuButton.gameObject.SetActive(false);
-        restartButton.gameObject.SetActive(false);
-        quitButton.gameObject.SetActive(false);
-    }
+        public GameObject firstCheckpoint;
+        public GameObject secondCheckpoint;
+        public Text clockText;
+        public Text winText;
+        public Button restartButton;
+        public Button quitButton;
+        public static int timeCount;
+        public static float timer = 0.0f;
+        private float seconds;
+        private float ms;
+        private float finalTimeScoreSeconds;
+        private float finalTimeScoreMiliseconds;
+        public static int count = 0;
+        public static bool isGameWin = false;
+        public static bool quitGame = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        if (!isGameWin)
+        // Start is called before the first frame update
+        void Start()
         {
-            clock();
+            clockText.text = "Time: " + seconds.ToString() + "." + ms.ToString();
+            winText.text = "";
+            restartButton.gameObject.SetActive(false);
+            quitButton.gameObject.SetActive(false);
         }
 
-        if (count == 3)
+        // Update is called once per frame
+        void Update()
         {
-            Destroy(firstCheckpoint);
+
+            if (!isGameWin)
+            {
+                clock();
+            }
+
+            if (count == 3)
+            {
+                Destroy(firstCheckpoint);
+            }
+            else if (count == 6)
+            {
+                Destroy(secondCheckpoint);
+            }
+
+            if (isGameWin)
+            {
+                finalTimeScoreSeconds = seconds;
+                finalTimeScoreMiliseconds = ms;
+                winText.text = "Stage Complete!" +
+                    "\nTime taken: " + finalTimeScoreSeconds.ToString() + "." + finalTimeScoreMiliseconds.ToString() + " seconds";
+                restartButton.gameObject.SetActive(true);
+                quitButton.gameObject.SetActive(true);
+            }
         }
-        else if (count == 6)
+
+        void clock()
         {
-            Destroy(secondCheckpoint);
+            timeCount = 0;
+            timer += Time.deltaTime;
+            seconds = (int)timer % 60f;
+            ms = ((int)(timer * 1000f)) % 1000;
+            clockText.text = "Time: " + seconds.ToString() + "." + ms.ToString() + " seconds";
         }
 
-        if (isGameWin)
+        public void OnMenuButtonPress()
         {
-            winText.text = "You win!" +
-                "\nTime taken: " + timeCount.ToString() + " seconds";
-            menuButton.gameObject.SetActive(true);
-            restartButton.gameObject.SetActive(true);
-            quitButton.gameObject.SetActive(true);
+            quitGame = true;
+            PhotonNetwork.LoadLevel(0);  // Leave to menu
         }
-    }
 
-    void clock()
-    {
-        timeCount = 0;
-        timer += Time.deltaTime;
-        seconds = (int)timer % 60;
-        timeCount += seconds;
-        clockText.text = "Time: " + timeCount.ToString() + " seconds";
-    }
+        public void OnRestartButtonPress()
+        {
+            PhotonNetwork.LoadLevel(2);  // Restart the game
+        }
 
-    public void OnMenuButtonPress()
-    {
-        SceneManager.LoadScene("Menu");  // Play the game
-    }
-
-    public void OnRestartButtonPress()
-    {
-        SceneManager.LoadScene("Game");  // Play the game
-    }
-
-    public void OnExitButtonPress()
-    {
-        Application.Quit();  // Exit the game
     }
 }

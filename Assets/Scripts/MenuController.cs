@@ -1,27 +1,24 @@
-﻿/*
- * Author:          Tiffany Nguyen
- * Date:            December 13, 2020
- * Description:     This script handles the buttons on the main menu.
- */
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MenuController : MonoBehaviour
+namespace Duoshooter
 {
-    public Button playButton;
-    public Button exitButton;
-
-    public void OnPlayButtonPress()
+    public class MenuController : MonoBehaviour
     {
-        SceneManager.LoadScene("Game");  // Play the game
-    }
+        public Button playButton;
+        public Button exitButton;
 
-    public void OnExitButtonPress()
-    {
-        Application.Quit();  // Exit the game
+        public void OnPlayButtonPress()
+        {
+            SceneManager.LoadScene("Lobby");  // Connects to the online lobby
+        }
+
+        public void OnExitButtonPress()
+        {
+            Application.Quit();  // Exit the game
+        }
     }
 }

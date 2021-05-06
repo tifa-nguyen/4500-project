@@ -154,6 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a82505ab7f1134a89ef74b73b0a7fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explodePrefab: {fileID: 332834141989494399, guid: 04fff09acd6de5144834b5ecb87f0170,
+    type: 3}
   bullet: {fileID: 3113489124780604907, guid: 232bc011e67b886498c095ebc4e75358, type: 3}
   gun: {fileID: 3169934065561390244}
   speed: 2
