@@ -1,78 +1,66 @@
-﻿/*
- * Author:          Tiffany Nguyen
- * Date:            December 13, 2020
- * Description:     This script handles the Boss health and missile firing towards the player.
- */
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossController : MonoBehaviour
+namespace Duoshooter
 {
-    public GameObject player;
-    public Rigidbody2D bullet;
-    public GameObject gun;
-    //public GameObject explodePrefab;
-    private Rigidbody2D rb2d;
-    private static int bossHealth = 20;
-    public float speed = 3f;
-    public float shotForce = 100f;
-    private float timer = 0.0f;
-
-    // Start is called before the first frame update
-    void Start()
+    public class BossController : MonoBehaviour
     {
-        rb2d = this.GetComponent<Rigidbody2D>();
-        timer = 0.0f;
-    }
+        public GameObject player;
+        public Rigidbody2D bullet;
+        public GameObject gun;
+        public GameObject explodePrefab;
+        private Rigidbody2D rb2d;
+        private static int bossHealth = 20;
+        public float speed = 3f;
+        public float shotForce = 100f;
+        private float timer = 0.0f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (true)
+        // Start is called before the first frame update
+        void Start()
         {
-            timer += Time.deltaTime;
-            int seconds = (int)timer % 60;
-            if (seconds >= 1)
+            rb2d = this.GetComponent<Rigidbody2D>();
+            timer = 0.0f;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (true)
             {
-                bossFire();
-                timer = 0;
+                timer += Time.deltaTime;
+                int seconds = (int)timer % 60;
+                if (seconds >= 1)
+                {
+                    bossFire();
+                    timer = 0;
+                }
             }
         }
-    }
 
-    public void bossFire()
-    {
-        //AudioSource[] sounds = GetComponents<AudioSource>();
-        Rigidbody2D bulletPre = Instantiate(bullet) as Rigidbody2D;  // Spawn laser
-        bulletPre.transform.position = gun.transform.position;  // Set laser position
-        bulletPre.transform.rotation = transform.rotation;      // Set laser rotation
-        Vector2 direction = (player.transform.position - transform.position);
-        bulletPre.AddForce(direction * shotForce);   // Shoot laser up from the direction the player is facing.
-        //sounds[0].Play();       // Play laser sound effect.
-    }
-
-    public static int getBossHealth()
-    {
-        return bossHealth;
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Bullet"))   // On collision with an bullet, do the following:
+        public void bossFire()
         {
-            bossHealth--;     // Increments the score count
-            if (bossHealth == 0)
+            //AudioSource[] sounds = GetComponents<AudioSource>();
+            Rigidbody2D bulletPre = Instantiate(bullet) as Rigidbody2D;  // Spawn laser
+            bulletPre.transform.position = gun.transform.position;  // Set laser position
+            bulletPre.transform.rotation = transform.rotation;      // Set laser rotation
+            Vector2 direction = (player.transform.position - transform.position);
+            bulletPre.AddForce(direction * shotForce);   // Shoot laser up from the direction the player is facing.
+            //sounds[0].Play();       // Play laser sound effect.
+        }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (other.gameObject.CompareTag("Bullet"))   // On collision with an bullet, do the following:
             {
-                Destroy(gameObject);    // Destory the enemy
-                //Instantiate(explodePrefab, transform.position, transform.rotation); // Play explosion animation
-                GameController.isGameWin = true;
+                bossHealth--;     // Increments the score count
+                if (bossHealth == 0)
+                {
+                    Destroy(gameObject);    // Destory the enemy
+                    Instantiate(explodePrefab, transform.position, transform.rotation); // Play explosion animation
+                    GameController.isGameWin = true;
+                }
             }
         }
-        /*if (other.gameObject.tag == "OuterWall")
-        {
-            Physics2D.IgnoreCollision(other.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true); // Ignore the outer wall to allow for off-screen spawning and movement to position.
-        }*/
     }
 }
