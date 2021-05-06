@@ -6,32 +6,39 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class GameManager : MonoBehaviourPunCallbacks
+namespace Duoshooter
 {
-    void LoadArena()
+    public class GameManager : MonoBehaviourPunCallbacks
     {
-        if (!PhotonNetwork.IsMasterClient)
+        void LoadArena()
         {
-            Debug.LogError("PhotonNetwork : Trying to load a level but we are not the mast Client");
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                Debug.LogError("PhotonNetwork : Trying to load a level but we are not the mast Client");
+            }
+            Debug.LogFormat("PhotonNetwork : Loading Level : Game");
+            PhotonNetwork.LoadLevel(2);
         }
-        Debug.LogFormat("PhotonNetwork : Loading Level : {0}", PhotonNetwork.CurrentRoom.PlayerCount);
-        PhotonNetwork.LoadLevel("Room for " + PhotonNetwork.CurrentRoom.PlayerCount);
-    }
 
-    public static GameManager Instance;
+        public static GameManager Instance;
 
-    void Start()
-    {
-        Instance = this;
-    }
+        void Start()
+        {
+            Instance = this;
+            if (!PhotonNetwork.IsConnected)
+            {
+                SceneManager.LoadScene(0);
+            }
+        }
 
-    public override void OnLeftRoom()
-    {
-        SceneManager.LoadScene(0);
-    }
+        public override void OnLeftRoom()
+        {
+            SceneManager.LoadScene(0);
+        }
 
-    public void LeaveRoom()
-    {
-        PhotonNetwork.LeaveRoom();
+        public void LeaveRoom()
+        {
+            PhotonNetwork.LeaveRoom();
+        }
     }
 }

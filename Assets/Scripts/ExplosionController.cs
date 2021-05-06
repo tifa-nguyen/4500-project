@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosionController : MonoBehaviour
+namespace Duoshooter
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ExplosionController : MonoBehaviour
     {
-        Destroy(gameObject, 0.5f);   // Self-destruct in 0.5 seconds after object creation.
+        // Start is called before the first frame update
+        void Start()
+        {
+            Destroy(gameObject, 0.5f);   // Self-destruct in 0.5 seconds after object creation.
 
-    }
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }

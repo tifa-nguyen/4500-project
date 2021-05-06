@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MineController : MonoBehaviour
+namespace Duoshooter
 {
-    public GameObject explodePrefab;
-
-    // Start is called before the first frame update
-    void Start()
+    public class MineController : MonoBehaviour
     {
-        
-    }
+        public GameObject explodePrefab;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Bullet"))   // On collision with an bullet, do the following:
+        // Start is called before the first frame update
+        void Start()
         {
-            GameController.timer += 5;     // Increase time by 5 seconds.
-            Destroy(gameObject);    // Destory the mine
-            Instantiate(explodePrefab, transform.position, transform.rotation); // Play explosion animation
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (other.gameObject.CompareTag("Bullet"))   // On collision with an bullet, do the following:
+            {
+                GameController.timer += 5;     // Increase time by 5 seconds.
+                Destroy(gameObject);    // Destory the mine
+                Instantiate(explodePrefab, transform.position, transform.rotation); // Play explosion animation
+            }
         }
     }
 }

@@ -5,37 +5,40 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
-[RequireComponent(typeof(InputField))]
-public class PlayerNameInputField : MonoBehaviour
+namespace Duoshooter
 {
-    const string playerNamePrefKey = "PlayerName";
-
-    // Start is called before the first frame update
-    void Start()
+    [RequireComponent(typeof(InputField))]
+    public class PlayerNameInputField : MonoBehaviour
     {
-        string defaultName = string.Empty;
-        InputField _inputField = this.GetComponent<InputField>();
-        if (_inputField != null)
+        const string playerNamePrefKey = "PlayerName";
+
+        // Start is called before the first frame update
+        void Start()
         {
-            if (PlayerPrefs.HasKey(playerNamePrefKey))
+            string defaultName = string.Empty;
+            InputField _inputField = this.GetComponent<InputField>();
+            if (_inputField != null)
             {
-                defaultName = PlayerPrefs.GetString(playerNamePrefKey);
-                _inputField.text = defaultName;
+                if (PlayerPrefs.HasKey(playerNamePrefKey))
+                {
+                    defaultName = PlayerPrefs.GetString(playerNamePrefKey);
+                    _inputField.text = defaultName;
+                }
             }
+
+            PhotonNetwork.NickName = defaultName;
         }
 
-        PhotonNetwork.NickName = defaultName;
-    }
-
-    public void SetPlayerName(string value)
-    {
-        if (string.IsNullOrEmpty(value))
+        public void SetPlayerName(string value)
         {
-            Debug.LogError("Player Name is null or empty");
-            return;
-        }
-        PhotonNetwork.NickName = value;
+            if (string.IsNullOrEmpty(value))
+            {
+                Debug.LogError("Player Name is null or empty");
+                return;
+            }
+            PhotonNetwork.NickName = value;
 
-        PlayerPrefs.SetString(playerNamePrefKey, value);
+            PlayerPrefs.SetString(playerNamePrefKey, value);
+        }
     }
 }

@@ -4,18 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MenuController : MonoBehaviour
+namespace Duoshooter
 {
-    public Button playButton;
-    public Button exitButton;
-
-    public void OnPlayButtonPress()
+    public class MenuController : MonoBehaviour
     {
-        SceneManager.LoadScene("Lobby");  // Connects to the online lobby
-    }
+        public Button playButton;
+        public Button exitButton;
 
-    public void OnExitButtonPress()
-    {
-        Application.Quit();  // Exit the game
+        public void OnPlayButtonPress()
+        {
+            SceneManager.LoadScene("Lobby");  // Connects to the online lobby
+        }
+
+        public void OnExitButtonPress()
+        {
+            Application.Quit();  // Exit the game
+        }
     }
 }
