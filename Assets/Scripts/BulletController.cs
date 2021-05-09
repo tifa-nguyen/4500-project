@@ -21,7 +21,7 @@ namespace Duoshooter
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Boss") || other.gameObject.CompareTag("Mines") || other.gameObject.CompareTag("Bullet") || other.gameObject.CompareTag("EnemyBullet") || other.gameObject.CompareTag("Border") || other.gameObject.CompareTag("CheckpointWall"))   // On collision with an enemy or wall barrier, do the following:
+            if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Player 1") || other.gameObject.CompareTag("Player 2") || other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Boss") || other.gameObject.CompareTag("Mines") || other.gameObject.CompareTag("Bullet") || other.gameObject.CompareTag("EnemyBullet") || other.gameObject.CompareTag("Border") || other.gameObject.CompareTag("CheckpointWall"))   // On collision with an enemy or wall barrier, do the following:
             {
                 Destroy(gameObject);    // Destroy the laser
             }

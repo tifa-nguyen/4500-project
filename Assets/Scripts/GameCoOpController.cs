@@ -8,10 +8,11 @@ using Photon.Realtime;
 
 namespace Duoshooter
 {
-    public class GameController : MonoBehaviourPunCallbacks
+    public class GameCoOpController : MonoBehaviourPunCallbacks
     {
         public GameObject firstCheckpoint;
         public GameObject secondCheckpoint;
+        public GameObject thirdCheckpoint;
         public Text clockText;
         public Text winText;
         public Button restartButton;
@@ -34,9 +35,27 @@ namespace Duoshooter
             restartButton.gameObject.SetActive(false);
             quitButton.gameObject.SetActive(false);
 
-            Vector3 position = new Vector3(-8f, 0f, 0f);
-            Quaternion rotation = Quaternion.Euler(0f, 0f, 270f);
-            PhotonNetwork.Instantiate("Player1", position, rotation, 0);
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                int playerCount = 1;
+                foreach (Player p in PhotonNetwork.PlayerList)
+                {
+                    if (playerCount == 1)
+                    {
+                        Vector3 position = new Vector3(-8f, 2.5f, 0f);
+                        Quaternion rotation = Quaternion.Euler(0f, 0f, 270f);
+                        PhotonNetwork.Instantiate("Player1", position, rotation, 0);
+                        playerCount++;
+                    }
+                    else if (playerCount == 2)
+                    {
+                        Vector3 position = new Vector3(-8f, -2.5f, 0f);
+                        Quaternion rotation = Quaternion.Euler(0f, 0f, 270f);
+                        PhotonNetwork.Instantiate("Player2", position, rotation, 0);
+                    }
+                }
+            }
         }
 
         // Update is called once per frame
@@ -47,13 +66,17 @@ namespace Duoshooter
                 clock();
             }
 
-            if (count == 3)
+            if (count == 2)
             {
                 Destroy(firstCheckpoint);
             }
-            else if (count == 6)
+            else if (count == 4)
             {
                 Destroy(secondCheckpoint);
+            }
+            else if (count == 8)
+            {
+                Destroy(thirdCheckpoint);
                 isBossFight = true;
             }
 

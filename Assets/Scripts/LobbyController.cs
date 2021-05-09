@@ -11,8 +11,8 @@ namespace Duoshooter
     public class LobbyController : MonoBehaviour
     {
         public static LobbyController lobby;
-        public Text playerStatus;
         public Button startButton;
+        public Text playerStatus;
 
         private void Awake()
         {
@@ -22,18 +22,13 @@ namespace Duoshooter
         // Start is called before the first frame update
         void Start()
         {
-
+            
         }
 
         // Update is called once per frame
         void Update()
         {
             playerStatus.text = ("Players Connected: " + PhotonNetwork.CountOfPlayers + " / 2");
-        }
-
-        public void StartGame()
-        {
-            PhotonNetwork.LoadLevel(2);
         }
     }
 }

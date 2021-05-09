@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 namespace Duoshooter
 {
     public class BossController : MonoBehaviour
     {
-        public GameObject player;
+        private GameObject player1;
+        private GameObject player2;
         public Rigidbody2D bullet;
         public GameObject gun;
         public GameObject explodePrefab;
@@ -26,7 +28,12 @@ namespace Duoshooter
         // Update is called once per frame
         void Update()
         {
-            if (true)
+            player1 = GameObject.FindGameObjectWithTag("Player 1");
+            if (PhotonNetwork.CountOfPlayers == 2)
+            {
+                player2 = GameObject.FindGameObjectWithTag("Player 2");
+            }
+            if (GameController.isBossFight)
             {
                 timer += Time.deltaTime;
                 int seconds = (int)timer % 60;
@@ -40,12 +47,28 @@ namespace Duoshooter
 
         public void bossFire()
         {
+            int rand = Random.Range(0, 10);
             //AudioSource[] sounds = GetComponents<AudioSource>();
             Rigidbody2D bulletPre = Instantiate(bullet) as Rigidbody2D;  // Spawn laser
             bulletPre.transform.position = gun.transform.position;  // Set laser position
             bulletPre.transform.rotation = transform.rotation;      // Set laser rotation
-            Vector2 direction = (player.transform.position - transform.position);
-            bulletPre.AddForce(direction * shotForce);   // Shoot laser up from the direction the player is facing.
+            if (PhotonNetwork.CountOfPlayers == 1)
+            {
+                Vector2 direction = (player1.transform.position - transform.position);
+                bulletPre.AddForce(direction * shotForce);   // Shoot laser up from the direction the player is facing.
+            }
+            if (PhotonNetwork.CountOfPlayers == 2) {
+                if (rand % 2 == 0)
+                {
+                    Vector2 direction = (player1.transform.position - transform.position);
+                    bulletPre.AddForce(direction * shotForce);   // Shoot laser up from the direction the player is facing.
+                }
+                if (rand % 2 == 1)
+                {
+                    Vector2 direction = (player2.transform.position - transform.position);
+                    bulletPre.AddForce(direction * shotForce);   // Shoot laser up from the direction the player is facing.
+                }
+            }
             //sounds[0].Play();       // Play laser sound effect.
         }
 

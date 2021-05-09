@@ -12,6 +12,8 @@ TagManager:
   - Border
   - EnemyBullet
   - Mines
+  - Player 1
+  - Player 2
   layers:
   - Default
   - TransparentFX
